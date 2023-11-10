@@ -1,6 +1,0 @@
-﻿namespace ProjectManager.Core.Data;
-
-public class DataOptions
-{
-    public string ConnectionString { get; set; }
-}
