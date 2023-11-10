@@ -1,0 +1,7 @@
+﻿root = true
+[*]
+dotnet_diagnostic.CS1591.severity = none
+[*Controller.cs]
+dotnet_diagnostic.CS1591.severity = error
+[ApiController.cs]
+dotnet_diagnostic.CS1591.severity = none
