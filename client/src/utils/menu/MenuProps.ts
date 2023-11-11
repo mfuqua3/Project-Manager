@@ -1,5 +1,7 @@
+import { PopoverVirtualElement } from "@mui/material";
+
 export interface MenuProps {
-    anchorEl: Element | ((element: Element) => Element) | null | undefined;
+    anchorEl: any;
     isOpen: boolean;
 
     open(anchorEl: Element): void;

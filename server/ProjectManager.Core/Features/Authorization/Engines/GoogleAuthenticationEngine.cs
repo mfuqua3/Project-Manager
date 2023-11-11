@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using Google.Apis.Auth;
 using Microsoft.Extensions.Options;
+using ProjectManager.Core.Utility.Exceptions;
 
 namespace ProjectManager.Core.Features.Authorization.Engines;
 
@@ -39,7 +40,7 @@ public class GoogleAuthenticationEngine : IGoogleAuthenticationEngine
         
         if (!_configuration.ValidEmails.Contains(payload.Email))
         {
-            throw new UnauthorizedAccessException("User is not authorized.");
+            throw new ProjectManagerForbiddenAccessException("User is not authorized.");
         }
         return new ClaimsIdentity(new []
         {

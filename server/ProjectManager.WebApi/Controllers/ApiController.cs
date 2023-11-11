@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ProjectManager.WebApi.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 [Authorize]
 public class ApiController : Controller
 {

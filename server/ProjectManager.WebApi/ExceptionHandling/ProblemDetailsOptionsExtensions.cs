@@ -98,10 +98,6 @@ public static class ProblemDetailsOptionsExtensions
     private static void AddDefaultMappings(this IProblemDetailsExceptionBuilder builder)
     {
         builder
-            .Map<AuthenticationException>(HttpStatusCode.Unauthorized)
-            .Map<UnauthorizedAccessException>(HttpStatusCode.Forbidden)
-            .Map<InvalidOperationException>(HttpStatusCode.BadRequest)
-            .Map<ArgumentException>(HttpStatusCode.BadRequest)
             .Map<NotImplementedException>(HttpStatusCode.NotImplemented)
             .Map<ServerIsTeapotException>(418, "ImATeapot");
     }

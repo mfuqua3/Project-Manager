@@ -27,7 +27,7 @@ public class Program
         LoggerConfiguration lc)
         => lc.ReadFrom.Configuration(ctx.Configuration)
             .ReadFrom.Services(serviceProvider)
-            .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+            //.MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
             .Enrich.WithSpan()
             .Enrich.FromLogContext();
 }

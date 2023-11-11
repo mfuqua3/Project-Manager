@@ -14,7 +14,6 @@ namespace ProjectManager.WebApi.Controllers;
 /// Controller responsible for managing user authorizations.
 /// </summary>
 [ApiController]
-[Route("[controller]")]
 public class AuthorizationsController : ApiController
 {
     private const string RefreshCookieKey = "project-manager_auth";
@@ -35,6 +34,7 @@ public class AuthorizationsController : ApiController
     /// <response code="201">Returns the newly created token response for the user.</response>
     /// <exception cref="InvalidOperationException">Thrown if the user cannot be authorized through Google SSO.</exception>
     /// <exception cref="ProjectManagerDataNotFoundException">Thrown if the user does not exist in the system.</exception>
+    /// <exception cref="ProjectManagerForbiddenAccessException">Thrown if the user is not whitelisted for project access.</exception>
     [HttpPost("google")]
     [AllowAnonymous]
     public async Task<ActionResult<TokenResponse>> AuthorizeGoogleUserAsync(TokenRequest request)

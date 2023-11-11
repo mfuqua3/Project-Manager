@@ -26,7 +26,7 @@ export const useApi = (): ProvidedErrorMessagingMethods => {
             .catch((error) => {
                 let message: string;
                 if (isAxiosError(error)) {
-                    if (error.response?.data && isProblemDetails(error.response?.data)) {
+                    if (error.response?.data && isProblemDetails(error.response.data)) {
                         message = error.response.data.title;
                         logger.error(error.response.data as ProblemDetails, 'The API Server has reported an error');
                     } else {
