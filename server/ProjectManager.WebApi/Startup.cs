@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
+using ProjectManager.Common.DependencyInjection;
 using ProjectManager.Core;
-using ProjectManager.Core.Utility.DependencyInjection;
 using ProjectManager.WebApi.Auth;
 using ProjectManager.WebApi.ExceptionHandling;
 using ProjectManager.WebApi.OpenApi;

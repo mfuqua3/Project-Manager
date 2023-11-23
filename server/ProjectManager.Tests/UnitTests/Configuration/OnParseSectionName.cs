@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using ProjectManager.Core.Utility.Configuration;
+using ProjectManager.Common.Configuration;
 using Shouldly;
 
 namespace ProjectManager.Tests.UnitTests.Configuration;

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
-using ProjectManager.Core.Data;
+using ProjectManager.Data;
 using ProjectManager.Tests.IntegrationTests;
 using Serilog.Events;
 

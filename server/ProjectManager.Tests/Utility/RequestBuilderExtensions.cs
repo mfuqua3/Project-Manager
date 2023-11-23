@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
-using ProjectManager.Core.Data.Entities;
-using ProjectManager.Core.Features.Authorization.Engines;
-using ProjectManager.Core.Utility.Extensions;
+using ProjectManager.Common.Extensions;
+using ProjectManager.Data.Entities;
+using ProjectManager.Features.Authorization.Abstractions;
 using ProjectManager.Tests.IntegrationTests.Data;
 
 namespace ProjectManager.Tests.Utility;

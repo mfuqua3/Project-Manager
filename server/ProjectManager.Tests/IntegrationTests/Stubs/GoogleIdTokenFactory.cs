@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using ProjectManager.Core.Features.Authorization;
+using ProjectManager.Features.Authorization;
 using ProjectManager.Tests.Utility;
 
 namespace ProjectManager.Tests.IntegrationTests.Stubs;

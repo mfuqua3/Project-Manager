@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using ProjectManager.Core.Data;
+using ProjectManager.Data;
 using ProjectManager.Tests.Utility;
 using Serilog.Events;
 

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProjectManager.Core.Utility.DependencyInjection;
-using ProjectManager.Core.Utility.Exceptions;
+using ProjectManager.Common.DependencyInjection;
+using ProjectManager.Common.Exceptions;
 
-namespace ProjectManager.Core.Data;
+namespace ProjectManager.Data;
 public class DataModule : Module<DataOptions>
 {
 

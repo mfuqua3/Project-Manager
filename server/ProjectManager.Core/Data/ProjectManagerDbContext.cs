@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ProjectManager.Core.Data.Entities;
-using ProjectManager.Core.Utility.Extensions;
+using ProjectManager.Common.Extensions;
+using ProjectManager.Data.Entities;
 
-namespace ProjectManager.Core.Data;
+namespace ProjectManager.Data;
 
 public class ProjectManagerDbContext : IdentityDbContext<AppUser>
 {

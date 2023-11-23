@@ -1,6 +1,6 @@
 ﻿using System.Net;
-using ProjectManager.Core.Utility.DependencyInjection;
-using ProjectManager.Core.Utility.Exceptions;
+using ProjectManager.Common.DependencyInjection;
+using ProjectManager.Common.Exceptions;
 
 namespace ProjectManager.WebApi.ExceptionHandling;
 

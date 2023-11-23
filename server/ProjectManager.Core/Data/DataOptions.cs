@@ -1,4 +1,4 @@
-﻿namespace ProjectManager.Core.Data;
+﻿namespace ProjectManager.Data;
 
 public class DataOptions
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using ProjectManager.Core.Contracts;
+using ProjectManager.Common.Contracts;
 
-namespace ProjectManager.Core.Data.Entities;
+namespace ProjectManager.Data.Entities;
 
 public class AppUser : IdentityUser, IRefreshToken, INamed
 {

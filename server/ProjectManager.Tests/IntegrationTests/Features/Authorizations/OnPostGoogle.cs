@@ -1,8 +1,8 @@
 ﻿using System.Net.Http.Json;
 using Microsoft.AspNetCore.Identity;
 using NUnit.Framework;
-using ProjectManager.Core.Data.Entities;
-using ProjectManager.Core.Features.Authorization.Domain;
+using ProjectManager.Data.Entities;
+using ProjectManager.Features.Authorization.Domain.Commands;
 using ProjectManager.Tests.Infrastructure;
 using ProjectManager.Tests.IntegrationTests.Data;
 using ProjectManager.Tests.IntegrationTests.Stubs;
@@ -23,7 +23,7 @@ public class OnPostGoogle : IntegrationTest
         var idTokenFactory = GetService<GoogleIdTokenFactory>();
         var idToken = idTokenFactory.GenerateFakeToken(TestUserToCreate.GenerateGoogleClaims());
         var client = CreateClient();
-        _response = await client.PostAsJsonAsync("authorizations/google", new TokenRequest { IdToken = idToken });
+        _response = await client.PostAsJsonAsync("authorizations/google", new AuthenticateGoogleUserCommand { IdToken = idToken });
         _userManager = GetService<UserManager<AppUser>>();
     }
     [Test]

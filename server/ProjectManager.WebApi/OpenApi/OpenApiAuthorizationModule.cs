@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using ProjectManager.Core.Utility.DependencyInjection;
+using ProjectManager.Common.DependencyInjection;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace ProjectManager.WebApi.OpenApi;

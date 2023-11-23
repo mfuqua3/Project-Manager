@@ -1,10 +1,10 @@
 ﻿using System.Xml.XPath;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using Module = ProjectManager.Core.Utility.DependencyInjection.Module;
+using Module = ProjectManager.Common.DependencyInjection.Module;
 
 namespace ProjectManager.WebApi.OpenApi;
 
-public class OpenApiXmlDocumentationModule : Module
+public class OpenApiXmlDocumentationModule : Common.DependencyInjection.Module
 {
     public override void ConfigureServices(IServiceCollection services)
     {

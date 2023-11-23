@@ -1,9 +1,10 @@
-﻿using ProjectManager.Core.Features.Authorization.Engines;
-using ProjectManager.Core.Features.Authorization.Services;
-using ProjectManager.Core.Utility.Configuration;
-using ProjectManager.Core.Utility.DependencyInjection;
+﻿using ProjectManager.Common.Configuration;
+using ProjectManager.Common.DependencyInjection;
+using ProjectManager.Features.Authorization.Abstractions;
+using ProjectManager.Features.Authorization.Engines;
+using ProjectManager.Features.Authorization.Managers;
 
-namespace ProjectManager.Core.Features.Authorization;
+namespace ProjectManager.Features.Authorization;
 
 public class AuthorizationModule : Module
 {
@@ -15,7 +16,7 @@ public class AuthorizationModule : Module
             x.BindNestedOptions<JwtOptions>();
         });
         
-        services.AddScoped<IAuthorizationService, AuthorizationService>();
+        services.AddScoped<IAuthorizationManager, AuthorizationManager>();
 
         services.AddSingleton<IGoogleAuthenticationEngine, GoogleAuthenticationEngine>();
         services.AddSingleton<IJwtEngine, JwtEngine>();

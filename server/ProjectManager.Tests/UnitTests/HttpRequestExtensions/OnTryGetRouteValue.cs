@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using NSubstitute;
 using NUnit.Framework;
-using ProjectManager.Core.Utility.Extensions;
+using ProjectManager.Common.Extensions;
 using Shouldly;
 
 namespace ProjectManager.Tests.UnitTests.HttpRequestExtensions;

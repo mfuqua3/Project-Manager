@@ -1,6 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using ProjectManager.Core.Features.Authorization.Engines;
+using ProjectManager.Features.Authorization.Abstractions;
 
 namespace ProjectManager.Tests.IntegrationTests.Stubs;
 

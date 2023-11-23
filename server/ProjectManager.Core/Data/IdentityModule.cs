@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using ProjectManager.Core.Data.Entities;
-using ProjectManager.Core.Utility.DependencyInjection;
+using ProjectManager.Common.DependencyInjection;
+using ProjectManager.Data.Entities;
 
-namespace ProjectManager.Core.Data;
+namespace ProjectManager.Data;
 
 public class IdentityModule : Module
 {

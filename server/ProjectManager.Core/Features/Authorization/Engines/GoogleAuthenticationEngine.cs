@@ -2,14 +2,10 @@
 using System.Security.Claims;
 using Google.Apis.Auth;
 using Microsoft.Extensions.Options;
-using ProjectManager.Core.Utility.Exceptions;
+using ProjectManager.Common.Exceptions;
+using ProjectManager.Features.Authorization.Abstractions;
 
-namespace ProjectManager.Core.Features.Authorization.Engines;
-
-public interface IGoogleAuthenticationEngine
-{
-    Task<ClaimsIdentity> AuthenticateGoogleSsoAsync(string idToken);
-}
+namespace ProjectManager.Features.Authorization.Engines;
 
 public class GoogleAuthenticationEngine : IGoogleAuthenticationEngine
 {

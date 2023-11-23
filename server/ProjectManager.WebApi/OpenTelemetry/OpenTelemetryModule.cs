@@ -1,6 +1,6 @@
 ﻿using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using ProjectManager.Core.Utility.DependencyInjection;
+using ProjectManager.Common.DependencyInjection;
 
 namespace ProjectManager.WebApi.OpenTelemetry;
 

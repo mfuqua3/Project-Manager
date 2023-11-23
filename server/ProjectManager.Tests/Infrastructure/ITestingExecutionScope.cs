@@ -1,4 +1,4 @@
-﻿using ProjectManager.Core.Data;
+﻿using ProjectManager.Data;
 
 namespace ProjectManager.Tests.Infrastructure;
 

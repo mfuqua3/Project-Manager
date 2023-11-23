@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using NUnit.Framework;
-using ProjectManager.Core.Data.Entities;
-using ProjectManager.Core.Utility.Extensions;
+using ProjectManager.Common.Extensions;
+using ProjectManager.Data.Entities;
 using ProjectManager.Tests.Infrastructure;
 using ProjectManager.Tests.IntegrationTests.Data;
 using ProjectManager.Tests.Utility;

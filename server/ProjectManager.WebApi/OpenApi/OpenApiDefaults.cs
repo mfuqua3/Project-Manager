@@ -7,7 +7,7 @@ public static class OpenApiDefaults
 {
     public static OpenApiInfo Info => new()
     {
-        Title = "Project Manager",
+        Title = ProjectManagerApplication.ProductName,
         Contact = new OpenApiContact
         {
             Email = @"matt.fuqua@fortyau.com",
@@ -20,7 +20,7 @@ public static class OpenApiDefaults
             Name = @"GNU Affero General Public License v3.0",
             Url = new Uri(@"https://github.com/mfuqua3/Project-Manager/blob/main/LICENSE")
         },
-        Version = "v1"
+        Version = ProjectManagerApplication.Version?.ToString()
     };
     public static OpenApiSecurityScheme SecurityScheme => new()
     {

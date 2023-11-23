@@ -1,4 +1,4 @@
-﻿using ProjectManager.Core.Data.Entities;
+﻿using ProjectManager.Data.Entities;
 
 namespace ProjectManager.Tests.IntegrationTests.Data;
 

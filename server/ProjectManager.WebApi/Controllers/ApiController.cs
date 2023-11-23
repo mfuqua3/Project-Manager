@@ -6,7 +6,7 @@ namespace ProjectManager.WebApi.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-public class ApiController : Controller
+public class ApiController : ControllerBase
 {
     
 }

@@ -1,9 +1,9 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using ProjectManager.Core.Data;
-using ProjectManager.Core.Data.Entities;
-using ProjectManager.Core.Features.Authorization.Domain;
+using ProjectManager.Data;
+using ProjectManager.Data.Entities;
+using ProjectManager.Features.Authorization.Domain.Common;
 
 namespace ProjectManager.Tests.IntegrationTests.Data;
 

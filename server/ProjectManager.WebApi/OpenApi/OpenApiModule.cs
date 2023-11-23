@@ -1,4 +1,4 @@
-﻿using ProjectManager.Core.Utility.DependencyInjection;
+﻿using ProjectManager.Common.DependencyInjection;
 
 namespace ProjectManager.WebApi.OpenApi;
 

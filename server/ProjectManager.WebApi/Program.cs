@@ -1,4 +1,4 @@
-using ProjectManager.Core.Utility.Configuration;
+using ProjectManager.Common.Configuration;
 using Serilog;
 using Serilog.Enrichers.Span;
 using Serilog.Events;

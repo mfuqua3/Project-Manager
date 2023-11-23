@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using ProjectManager.Core.Features.Authorization;
-using ProjectManager.Core.Utility.DependencyInjection;
+using ProjectManager.Common.DependencyInjection;
+using ProjectManager.Features.Authorization;
 
 namespace ProjectManager.WebApi.Auth;
 

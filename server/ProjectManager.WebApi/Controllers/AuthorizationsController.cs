@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ProjectManager.Core.Features.Authorization.Domain;
-using ProjectManager.Core.Utility.Exceptions;
+using ProjectManager.Common.Exceptions;
+using ProjectManager.Features.Authorization.Abstractions;
+using ProjectManager.Features.Authorization.Domain.Commands;
+using ProjectManager.Features.Authorization.Domain.Results;
 using ProjectManager.WebApi.Auth;
-using IAuthorizationService = ProjectManager.Core.Features.Authorization.Services.IAuthorizationService;
 
 namespace ProjectManager.WebApi.Controllers;
 
@@ -17,14 +18,14 @@ namespace ProjectManager.WebApi.Controllers;
 public class AuthorizationsController : ApiController
 {
     private const string RefreshCookieKey = "project-manager_auth";
-    private readonly IAuthorizationService _service;
+    private readonly IAuthorizationManager _manager;
     /// <summary>
     /// Initializes an instance of the controller
     /// </summary>
-    /// <param name="service"></param>
-    public AuthorizationsController(IAuthorizationService service)
+    /// <param name="manager"></param>
+    public AuthorizationsController(IAuthorizationManager manager)
     {
-        _service = service;
+        _manager = manager;
     }
     /// <summary>
     /// Authorizes a Google user and provides a token response.
@@ -37,9 +38,9 @@ public class AuthorizationsController : ApiController
     /// <exception cref="ProjectManagerForbiddenAccessException">Thrown if the user is not whitelisted for project access.</exception>
     [HttpPost("google")]
     [AllowAnonymous]
-    public async Task<ActionResult<TokenResponse>> AuthorizeGoogleUserAsync(TokenRequest request)
+    public async Task<ActionResult<AuthenticateUserResult>> AuthorizeGoogleUserAsync(AuthenticateGoogleUserCommand request)
     {
-        var response = await _service.AuthorizeGoogleSsoAsync(request);
+        var response = await _manager.AuthenticateGoogleUserAsync(request);
         var cookieBuilder = new CookieBuilder
         {
             HttpOnly = true,
@@ -63,7 +64,7 @@ public class AuthorizationsController : ApiController
     /// <exception cref="ProjectManagerDataNotFoundException">Thrown if no user with the provided ID could be found.</exception>
     [HttpGet("refresh")]
     [Authorize(AuthenticationSchemes = ProjectManagerAuthenticationDefaults.RefreshScheme)]
-    public async Task<ActionResult<TokenResponse>> RefreshAuthenticatedUserAsync()
+    public async Task<ActionResult<AuthenticateUserResult>> RefreshAuthenticatedUserAsync()
     {
         var userId = User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
         if (!HttpContext.Request.Cookies.TryGetValue(RefreshCookieKey, out var refreshToken))
@@ -71,10 +72,10 @@ public class AuthorizationsController : ApiController
             throw new InvalidOperationException("No refresh token was present with the request");
         }
 
-        TokenResponse response;
+        AuthenticateUserResult response;
         try
         {
-            response = await _service.RefreshAuthenticatedUserAsync(new RefreshRequest
+            response = await _manager.RefreshAuthenticatedUserAsync(new RefreshAuthenticatedUserCommand
             {
                 UserId = userId,
                 RefreshToken = refreshToken
@@ -114,7 +115,7 @@ public class AuthorizationsController : ApiController
         if (result.Succeeded)
         {
             var userId = result.Principal.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
-            await _service.SignOutUserAsync(new SignoutRequest { UserId = userId });
+            await _manager.SignOutUserAsync(new SignoutUserCommand { UserId = userId });
         }
 
         return NoContent();

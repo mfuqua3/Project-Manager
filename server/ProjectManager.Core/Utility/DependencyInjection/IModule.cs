@@ -1,7 +1,0 @@
-﻿namespace ProjectManager.Core.Utility.DependencyInjection;
-
-public interface IModule
-{
-    void Initialize(IServiceCollection services);
-    void ConfigureServices(IServiceCollection services);
-}

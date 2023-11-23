@@ -3,13 +3,10 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using ProjectManager.Features.Authorization.Abstractions;
 
-namespace ProjectManager.Core.Features.Authorization.Engines;
+namespace ProjectManager.Features.Authorization.Engines;
 
-public interface IJwtEngine
-{
-    public string WriteToken(IEnumerable<Claim> claims);
-}
 public class JwtEngine : IJwtEngine
 {
     private readonly IOptionsMonitor<JwtOptions> _jwtOptionsMonitor;

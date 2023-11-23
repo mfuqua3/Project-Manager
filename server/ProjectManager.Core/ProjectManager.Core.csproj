@@ -4,6 +4,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <OutputType>library</OutputType>
+        <RootNamespace>ProjectManager</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -21,6 +22,13 @@
         </PackageReference>
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.11" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Features\Projects\Abstractions\" />
+      <Folder Include="Features\Projects\Domain\" />
+      <Folder Include="Features\Projects\Engines\" />
+      <Folder Include="Features\Projects\Services\" />
     </ItemGroup>
 
 </Project>

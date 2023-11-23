@@ -1,8 +1,8 @@
-﻿using ProjectManager.Core.Data;
-using ProjectManager.Core.Features.Authorization;
-using ProjectManager.Core.Utility.DependencyInjection;
+﻿using ProjectManager.Common.DependencyInjection;
+using ProjectManager.Data;
+using ProjectManager.Features.Authorization;
 
-namespace ProjectManager.Core;
+namespace ProjectManager;
 
 public class ProjectManagerModule : Module
 {

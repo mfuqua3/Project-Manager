@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using NUnit.Framework;
-using ProjectManager.Core.Utility.DependencyInjection.NamedServices;
+using ProjectManager.Common.DependencyInjection.NamedServices;
 using Shouldly;
 
 namespace ProjectManager.Tests.UnitTests.DependencyInjection;

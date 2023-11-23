@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
-using ProjectManager.Core;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace ProjectManager.WebApi.OpenApi;
