@@ -1,5 +1,8 @@
-﻿using System.Security.Authentication;
+﻿using System;
+using System.Collections.Generic;
+using System.Security.Authentication;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Google.Apis.Auth;
 using Microsoft.Extensions.Options;
 using ProjectManager.Common.Exceptions;

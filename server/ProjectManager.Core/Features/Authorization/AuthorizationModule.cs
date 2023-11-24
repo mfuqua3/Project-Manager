@@ -1,4 +1,5 @@
-﻿using ProjectManager.Common.Configuration;
+﻿using Microsoft.Extensions.DependencyInjection;
+using ProjectManager.Common.Configuration;
 using ProjectManager.Common.DependencyInjection;
 using ProjectManager.Features.Authorization.Abstractions;
 using ProjectManager.Features.Authorization.Engines;

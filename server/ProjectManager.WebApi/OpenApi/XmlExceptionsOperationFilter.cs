@@ -87,6 +87,7 @@ public class XmlExceptionsOperationFilter : IOperationFilter
         if (methodNode == null) yield break;
 
         var exceptionNodes = methodNode.Select("exception");
+        var applicationTypes = ProjectManagerApplication.Assembly.GetTypes();
         foreach (XPathNavigator exceptionNode in exceptionNodes)
         {
             var exceptionTypeString = exceptionNode.GetAttribute("cref", string.Empty);
@@ -95,18 +96,19 @@ public class XmlExceptionsOperationFilter : IOperationFilter
                 exceptionTypeString = exceptionTypeString[2..];
             }
 
-            if (exceptionTypeString.StartsWith(ProjectManagerApplication.AssemblyName))
+            var applicationType = applicationTypes.FirstOrDefault(x => x.FullName == exceptionTypeString);
+            if (applicationType == null)
             {
-                exceptionTypeString += $", {ProjectManagerApplication.AssemblyName}";
+                applicationType = Type.GetType(exceptionTypeString, throwOnError: true);
             }
-            var exceptionType = Type.GetType(exceptionTypeString, throwOnError: true);
-            if (!exceptionType.IsAssignableTo(typeof(Exception)))
+            
+            if (!applicationType.IsAssignableTo(typeof(Exception)))
             {
                 throw new InvalidOperationException(
-                    $"Type {exceptionType.Name} appended as an error to {methodInfo.Name} is not an exception type");
+                    $"Type {applicationType.Name} appended as an error to {methodInfo.Name} is not an exception type");
             }
 
-            yield return (exceptionType, XmlCommentsTextHelper.Humanize(exceptionNode.InnerXml));
+            yield return (applicationType, XmlCommentsTextHelper.Humanize(exceptionNode.InnerXml));
         }
     }
 }

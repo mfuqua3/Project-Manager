@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using ProjectManager.Common.DependencyInjection;
 using ProjectManager.Data.Entities;
 

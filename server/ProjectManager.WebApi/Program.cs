@@ -1,7 +1,6 @@
 using ProjectManager.Common.Configuration;
 using Serilog;
 using Serilog.Enrichers.Span;
-using Serilog.Events;
 
 namespace ProjectManager.WebApi;
 

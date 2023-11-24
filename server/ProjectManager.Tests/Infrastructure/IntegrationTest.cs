@@ -113,7 +113,9 @@ public abstract class IntegrationTest
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     protected async Task StoreRequiredTestData(params object[] testObjects)
     {
-        throw new NotImplementedException();
+        var context = GetCurrentExecutionScope().GetService<ProjectManagerDbContext>();
+        context.AddRange(testObjects);
+        await context.SaveChangesAsync();
     }
 
     protected ProjectManagerDbContext OpenSession() =>

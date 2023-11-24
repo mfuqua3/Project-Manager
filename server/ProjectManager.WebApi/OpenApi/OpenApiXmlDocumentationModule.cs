@@ -1,6 +1,5 @@
 ﻿using System.Xml.XPath;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using Module = ProjectManager.Common.DependencyInjection.Module;
 
 namespace ProjectManager.WebApi.OpenApi;
 

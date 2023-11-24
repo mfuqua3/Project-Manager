@@ -2,12 +2,14 @@
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
         <OutputType>library</OutputType>
         <RootNamespace>ProjectManager</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="12.0.1" />
+        <PackageReference Include="AutoMapper.Collection.EntityFrameworkCore" Version="9.0.0" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
         <PackageReference Include="Google.Apis.Auth" Version="1.63.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5" />
         <PackageReference Include="JetBrains.Annotations" Version="2023.2.0"/>
@@ -25,10 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Features\Projects\Abstractions\" />
-      <Folder Include="Features\Projects\Domain\" />
       <Folder Include="Features\Projects\Engines\" />
-      <Folder Include="Features\Projects\Services\" />
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,6 @@
-﻿namespace ProjectManager.Common.DependencyInjection.NamedServices;
+﻿using System;
+
+namespace ProjectManager.Common.DependencyInjection.NamedServices;
 
 public class NamedService<T>
 {

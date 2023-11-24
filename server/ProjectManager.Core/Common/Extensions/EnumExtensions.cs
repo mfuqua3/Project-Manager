@@ -1,4 +1,6 @@
-﻿namespace ProjectManager.Common.Extensions;
+﻿using System;
+
+namespace ProjectManager.Common.Extensions;
 
 public static class EnumExtensions
 {

@@ -1,4 +1,8 @@
-﻿namespace ProjectManager.Common.DependencyInjection.NamedServices;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ProjectManager.Common.DependencyInjection.NamedServices;
 
 internal class NamedServiceCollection<T> : Dictionary<string, T>, INamedServiceCollection<T>
 {

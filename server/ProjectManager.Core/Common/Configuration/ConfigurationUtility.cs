@@ -1,4 +1,6 @@
-﻿namespace ProjectManager.Common.Configuration;
+﻿using System;
+
+namespace ProjectManager.Common.Configuration;
 
 public static class ConfigurationUtility
 {

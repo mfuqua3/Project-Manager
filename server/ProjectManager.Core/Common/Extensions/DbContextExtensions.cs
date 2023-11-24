@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using ProjectManager.Common.Contracts;
 
@@ -39,6 +40,15 @@ public static class DbContextExtensions
                 {
                     updated.Updated = DateTime.UtcNow;
                 }
+                #endregion
+
+                #region Configure INamed Fields
+
+                if (entry.Entity is INamed named && entry.State is EntityState.Added or EntityState.Modified)
+                {
+                    named.NameNormalized = named.Name?.ToUpper();
+                }
+
                 #endregion
             }
         }

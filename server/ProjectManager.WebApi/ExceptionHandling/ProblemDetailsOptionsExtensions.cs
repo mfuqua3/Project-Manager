@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Security.Authentication;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;

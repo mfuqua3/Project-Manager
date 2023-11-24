@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using ProjectManager.Data.Entities;
 

@@ -1,4 +1,6 @@
-﻿namespace ProjectManager.Common.Contracts;
+﻿using System.Collections.Generic;
+
+namespace ProjectManager.Common.Contracts;
 
 public class PagedList<T>
 {

@@ -1,6 +1,9 @@
-﻿namespace ProjectManager.Features.Authorization.Domain.Results;
+﻿using IResult = ProjectManager.Common.Contracts.IResult;
 
-public class SignOutUserResult
+namespace ProjectManager.Features.Authorization.Domain.Results;
+
+public class SignOutUserResult : IResult
 {
-    
+    public bool IsSuccess { get; init; }
+    public string Message { get; init; }
 }

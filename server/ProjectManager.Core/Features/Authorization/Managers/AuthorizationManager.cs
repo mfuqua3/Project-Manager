@@ -1,5 +1,8 @@
-﻿using System.Security.Claims;
+﻿using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using ProjectManager.Common.Contracts;
 using ProjectManager.Common.Exceptions;
 using ProjectManager.Common.Extensions;
 using ProjectManager.Data.Entities;
@@ -82,7 +85,7 @@ public class AuthorizationManager : IAuthorizationManager
         };
     }
 
-    public async Task SignOutUserAsync(SignoutUserCommand command)
+    public async Task<SignOutUserResult> SignOutUserAsync(SignoutUserCommand command)
     {
         var user = await _userManager.FindByIdAsync(command.UserId);
         if (user == null)
@@ -91,5 +94,6 @@ public class AuthorizationManager : IAuthorizationManager
         }
 
         await _userManager.RevokeRefreshTokenAsync(user);
+        return Result<SignOutUserResult>.Success();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using ProjectManager.Data;
 
 namespace ProjectManager.Tests.IntegrationTests;
 
@@ -9,19 +10,20 @@ public class IntegrationTestContext
 {
     public static IServiceProvider Services { get; private set; }
     public static TestServer TestServer { get; private set; }
-    private readonly bool _tearDownDatabase = false; //TODO
+    private readonly bool _tearDownDatabase = false;
     private string _databaseName;
 
     [OneTimeSetUp]
-    public async Task SetUpIntegrationTests()
+    public Task SetUpIntegrationTests()
     {
         var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-        _databaseName = "";//TODO
+        _databaseName = "project_manager_tests_db";
         if (_databaseName == "") throw new NotImplementedException("Provide a database name");
         var application = new IntegrationTestsApplication(_databaseName);
         
         Services = application.Services;
         TestServer = application.Server;
+        return Task.CompletedTask;
     }
 
 
@@ -29,18 +31,17 @@ public class IntegrationTestContext
     public async Task TearDownIntegrationTests()
     {
         await using var teardownScope = Services.CreateAsyncScope();
-        //TODO Example Teardown with EF DbContext
-        //     await using var dbContext = teardownScope.ServiceProvider.GetRequiredService<DbContext <-- Replace Me>();
-        //     try
-        //     {
-        //         if (_tearDownDatabase)
-        //         {
-        //             await dbContext.Database.EnsureDeletedAsync();
-        //         }
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         Console.WriteLine(@"An exception occurred during teardown. " + e.Message);
-        //     }
+        await using var dbContext = teardownScope.ServiceProvider.GetRequiredService<ProjectManagerDbContext>();
+        try
+        {
+            if (_tearDownDatabase)
+            {
+                await dbContext.Database.EnsureDeletedAsync();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(@"An exception occurred during teardown. " + e.Message);
+        }
     }
 }

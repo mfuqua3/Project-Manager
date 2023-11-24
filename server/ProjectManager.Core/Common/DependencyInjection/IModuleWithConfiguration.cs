@@ -1,4 +1,6 @@
-﻿namespace ProjectManager.Common.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+
+namespace ProjectManager.Common.DependencyInjection;
 
 public interface IModuleWithConfiguration : IModule
 {

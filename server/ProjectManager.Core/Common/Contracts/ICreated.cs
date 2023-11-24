@@ -1,4 +1,6 @@
-﻿namespace ProjectManager.Common.Contracts;
+﻿using System;
+
+namespace ProjectManager.Common.Contracts;
 
 public interface ICreated
 {

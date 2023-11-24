@@ -1,4 +1,6 @@
-﻿namespace ProjectManager.Features.Authorization;
+﻿using System.Collections.Generic;
+
+namespace ProjectManager.Features.Authorization;
 
 public class GoogleOptions
 {
