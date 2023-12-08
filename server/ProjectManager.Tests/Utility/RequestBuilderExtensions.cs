@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using ProjectManager.Common.Extensions;
 using ProjectManager.Data.Entities;
-using ProjectManager.Features.Authorization.Abstractions;
+using ProjectManager.Features.Users.Abstractions;
 using ProjectManager.Tests.IntegrationTests.Data;
 
 namespace ProjectManager.Tests.Utility;

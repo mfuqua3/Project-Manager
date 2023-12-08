@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ProjectManager.Data;
 using ProjectManager.Data.Entities;
-using ProjectManager.Features.Authorization.Domain.Common;
+using ProjectManager.Features.Users.Domain.Common;
 
 namespace ProjectManager.Tests.IntegrationTests.Data;
 
@@ -30,9 +30,9 @@ public class IntegrationTestDataUtility
         await _userManager.CreateAsync(adminUser);
         var identity = new ClaimsIdentity(new[]
         {
-            new Claim(AppClaimTypes.Id, adminUser.Id),
-            new Claim(AppClaimTypes.Email, adminUser.Email!),
-            new Claim(AppClaimTypes.Name, adminUser.Name)
+            new Claim(ProjectManagerClaimTypes.Id, adminUser.Id),
+            new Claim(ProjectManagerClaimTypes.Email, adminUser.Email!),
+            new Claim(ProjectManagerClaimTypes.Name, adminUser.Name)
         });
         await _userManager.AddClaimsAsync(adminUser, identity.Claims);
     }

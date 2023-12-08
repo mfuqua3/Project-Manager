@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjectManager.Common.Exceptions;
-using ProjectManager.Features.Authorization.Abstractions;
-using ProjectManager.Features.Authorization.Domain.Commands;
-using ProjectManager.Features.Authorization.Domain.Results;
+using ProjectManager.Features.Users.Abstractions;
+using ProjectManager.Features.Users.Domain.Commands;
+using ProjectManager.Features.Users.Domain.Results;
 using ProjectManager.WebApi.Auth;
 
 namespace ProjectManager.WebApi.Controllers;

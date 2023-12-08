@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.TestHost;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using ProjectManager.Data;
@@ -14,7 +15,7 @@ public class IntegrationTestContext
     private string _databaseName;
 
     [OneTimeSetUp]
-    public Task SetUpIntegrationTests()
+    public async Task SetUpIntegrationTests()
     {
         var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
         _databaseName = "project_manager_tests_db";
@@ -23,7 +24,9 @@ public class IntegrationTestContext
         
         Services = application.Services;
         TestServer = application.Server;
-        return Task.CompletedTask;
+        await using var scope = Services.CreateAsyncScope();
+        await using var dbContext = scope.ServiceProvider.GetRequiredService<ProjectManagerDbContext>();
+        await dbContext.Database.MigrateAsync();
     }
 
 

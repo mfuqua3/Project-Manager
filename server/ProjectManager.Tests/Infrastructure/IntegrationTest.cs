@@ -1,11 +1,17 @@
 using System.Runtime.CompilerServices;
+using System.Security.Claims;
 using Bogus;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 using ProjectManager.Data;
+using ProjectManager.Data.Entities;
+using ProjectManager.Features.Users.Abstractions;
 using ProjectManager.Tests.IntegrationTests;
+using ProjectManager.Tests.IntegrationTests.Data;
+using ProjectManager.Tests.Utility;
 using Serilog.Events;
 
 namespace ProjectManager.Tests.Infrastructure;
@@ -26,9 +32,10 @@ public abstract class IntegrationTest
     private IHostEnvironment _hostEnvironment;
     private TestServer _testServer;
     private bool _testFixtureInitialized;
+    private IEnumerable<Claim> _adminUserClaims;
 
     [OneTimeSetUp]
-    public void InitializeFixtureScope()
+    public async Task InitializeFixtureScope()
     {
         var applicationServiceProvider = IntegrationTestContext.Services;
         _hostEnvironment = applicationServiceProvider.GetRequiredService<IHostEnvironment>();
@@ -36,6 +43,9 @@ public abstract class IntegrationTest
         //Initialize Test Fixture Scope
         _testFixtureExecutionScope = new TestingExecutionScope(applicationServiceProvider);
         _testFixtureExecutionScope.Activate();
+        var userManager = _testFixtureExecutionScope.GetService<UserManager<AppUser>>();
+        var adminUser = await userManager.FindByEmailAsync(TestAdmin.Email);
+        _adminUserClaims = await userManager.GetClaimsAsync(adminUser!);
     }
 
     [SetUp]
@@ -88,9 +98,22 @@ public abstract class IntegrationTest
     /// Creates an HTTP client that can send requests to the test server.
     /// </summary>
     /// <returns>An instance of <see cref="HttpClient"/>.</returns>
-    protected HttpClient CreateClient() => EnsureResourceAccessPermitted()._testServer.CreateClient();
+    protected HttpClient CreateClient(bool withAuthorizations = true)
+    {
+        var server = EnsureResourceAccessPermitted()._testServer;
 
-    protected RequestBuilder CreateRequest(string path) => EnsureResourceAccessPermitted()._testServer.CreateRequest(path);
+        if (!withAuthorizations)
+        {
+            return server.CreateClient();
+        }
+        var jwtEngine = GetCurrentExecutionScope().GetService<IJwtEngine>();
+        return
+            new HttpClient(new AuthorizationsDelegatingHandler(_adminUserClaims, jwtEngine, server.CreateHandler()))
+            {
+                BaseAddress = server.BaseAddress,
+                Timeout = TimeSpan.FromSeconds(200)
+            };
+    }
 
     /// <summary>
     /// Retrieves all log events in the order they were logged.

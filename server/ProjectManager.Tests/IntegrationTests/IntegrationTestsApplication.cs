@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ProjectManager.Features.Authorization;
-using ProjectManager.Features.Authorization.Abstractions;
+using Npgsql;
+using ProjectManager.Data;
+using ProjectManager.Features.Users;
+using ProjectManager.Features.Users.Abstractions;
 using ProjectManager.Tests.IntegrationTests.Data;
 using ProjectManager.Tests.IntegrationTests.Stubs;
 using ProjectManager.Tests.Utility;
@@ -33,6 +35,14 @@ internal class IntegrationTestsApplication : WebApplicationFactory<Program>
             {
                 TestAdmin.Email,
                 TestUserToCreate.Email
+            });
+            services.PostConfigure<DataOptions>(opt =>
+            {
+                var connectionStringBuilder = new NpgsqlConnectionStringBuilder(opt.ConnectionString)
+                {
+                    Database = _databaseName
+                };
+                opt.ConnectionString = connectionStringBuilder.ConnectionString;
             });
             services.AddScoped<IntegrationTestDataUtility>();
             services.AddTransient<GoogleIdTokenFactory>();

@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using ProjectManager.Common.DependencyInjection;
 using ProjectManager.Data;
-using ProjectManager.Features.Authorization;
 using ProjectManager.Features.Projects;
+using ProjectManager.Features.Users;
 
 namespace ProjectManager;
 
