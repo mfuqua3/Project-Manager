@@ -4,8 +4,20 @@ using ProjectManager.Common.Contracts;
 
 namespace ProjectManager.Common.Extensions;
 
+/// <summary>
+/// DbContextExtensions static class provides extension methods for DbContext.
+/// </summary>
 public static class DbContextExtensions
 {
+    /// <summary>
+    /// An extension method to process entities implementing various interfaces.
+    /// For entities with <see cref="ISoftDelete"/> interface, if they are newly added it sets IsDeleted to false,
+    /// else if they are supposed to be deleted it sets IsDeleted to true and provides the deletion time.
+    /// For entities with <see cref="ICreated"/> interface and in an Added state, it sets the Created time to the current time.
+    /// For entities with <see cref="IUpdated"/> interface and in a Modified state, it sets the Updated time to the current time.
+    /// For entities with <see cref="INamed"/> interface and in an Added or Modified state, it sets the NameNormalized to uppercase version of Name.
+    /// </summary>
+    /// <param name="dbContext">The DbContext instance on which the extension method operates.</param>
     public static void ProcessCustomerInterfaces(this DbContext dbContext)
     {
         var autoDetectChangesEnabled = dbContext.ChangeTracker.AutoDetectChangesEnabled;

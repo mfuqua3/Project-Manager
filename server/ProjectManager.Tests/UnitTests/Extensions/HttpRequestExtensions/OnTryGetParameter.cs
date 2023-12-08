@@ -6,7 +6,7 @@ using NUnit.Framework;
 using ProjectManager.Common.Extensions;
 using Shouldly;
 
-namespace ProjectManager.Tests.UnitTests.HttpRequestExtensions;
+namespace ProjectManager.Tests.UnitTests.Extensions.HttpRequestExtensions;
 
 [TestFixture]
 public class OnTryGetParameter

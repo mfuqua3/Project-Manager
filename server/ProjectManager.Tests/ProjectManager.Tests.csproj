@@ -16,6 +16,7 @@
         <PackageReference Include="Shouldly" Version="4.1.0" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\ProjectManager.Core\ProjectManager.Core.csproj" />
       <ProjectReference Include="..\ProjectManager.WebApi\ProjectManager.WebApi.csproj" />
     </ItemGroup>
     <ItemGroup>
