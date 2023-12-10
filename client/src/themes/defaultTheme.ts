@@ -1,136 +1,82 @@
 import {createTheme} from "@mui/material";
 
 const primary = {
-    0: "#000000",
-    5: "#00150C",
-    10: "#002116",
-    20: "#003827",
-    25: "#004431",
-    30: "#00513B",
-    35: "#005E45",
-    40: "#006C4F",
-    50: "#008864",
-    60: "#26A37C",
-    70: "#4ABF95",
-    80: "#68DBAF",
-    90: "#86F8CA",
-    95: "#BCFFE0",
-    98: "#E7FFF1",
-    99: "#F4FFF7",
+    0: "#000022",
+    5: "#001f3f",
+    10: "#003355",
+    20: "#004677",
+    25: "#005999",
+    30: "#006BBB",
+    35: "#007FDD",
+    40: "#0093FF",
+    50: "#33A2FF",
+    60: "#66B1FF",
+    70: "#99C0FF",
+    80: "#CCD0FF",
+    90: "#EEEBFF",
+    95: "#F5F5FF",
+    98: "#FAFBFF",
+    99: "#FDFFFF",
     100: "#FFFFFF"
 }
-const secondary = {
+
+// Define color keys
+type ColorKeys = keyof typeof primary
+type Colors = {[K in ColorKeys]: string}
+const secondary: Colors = {
     0: "#000000",
-    5: "#01150D",
-    10: "#092017",
-    20: "#1F352B",
-    25: "#2A4036",
-    30: "#354B41",
-    35: "#40574D",
-    40: "#4C6358",
-    50: "#657C71",
-    60: "#7E968A",
-    70: "#98B1A4",
-    80: "#B3CCBF",
-    90: "#CFE9DA",
-    95: "#DDF7E8",
-    98: "#E7FFF1",
-    99: "#F4FFF7",
+    5: "#06161E",
+    10: "#0F2E3A",
+    20: "#1E5B75",
+    25: "#28789D",
+    30: "#3295C5",
+    35: "#3AA4ED",
+    40: "#45B3FF",
+    50: "#68C1FF",
+    60: "#90CFFF",
+    70: "#B8DEFF",
+    80: "#DFF2FF",
+    90: "#F1F8FF",
+    95: "#FCFEFF",
+    98: "#FEFFFF",
+    99: "#FFFEFF",
     100: "#FFFFFF"
 };
-const tertiary = {
-    0: "#000000",
-    5: "#250700",
-    10: "#360F00",
-    20: "#591D00",
-    25: "#6B2400",
-    30: "#7B2F08",
-    35: "#8A3A14",
-    40: "#9A461F",
-    50: "#B95D34",
-    60: "#D9764B",
-    70: "#F98F62",
-    80: "#FFB598",
-    90: "#FFDBCE",
-    95: "#FFEDE7",
-    98: "#FFF8F6",
-    99: "#FFFBFF",
-    100: "#FFFFFF"
+
+
+const colorValues = {
+    primary,
+    secondary,
+    tertiary: primary,
+    neutral: secondary
 }
-const neutral = {
-    0: "#000000",
-    5: "#0E1210",
-    10: "#191C1A",
-    20: "#2E312F",
-    25: "#393C3A",
-    30: "#444845",
-    35: "#505351",
-    40: "#5C5F5C",
-    50: "#757875",
-    60: "#8E918E",
-    70: "#A9ACA9",
-    80: "#C5C7C4",
-    90: "#E1E3DF",
-    95: "#EFF1EE",
-    98: "#F8FAF6",
-    99: "#FBFDF9",
-    100: "#FFFFFF"
-};
+const getColorAssignment = (color: Colors) => ({
+    main: color["20"],
+    contrastText: color["100"],
+    fixed: color["90"],
+    dim: color["80"],
+    container: color["90"],
+});
+
 const theme = createTheme({
     palette: {
         background: {
-            default: tertiary["95"]
+            default: colorValues.tertiary["95"]
         },
-        primary: {
-            main: primary["40"],
-            contrastText: primary["100"],
-            fixed: primary["90"],
-            dim: primary["80"],
-            container: primary["90"],
-        },
-        onPrimary: {
-            main: primary["100"],
-            contrastText: primary["40"],
-            fixed: primary["10"],
-            dim: primary["30"],
-            container: primary["10"],
-        },
-        secondary: {
-            main: secondary["40"],
-            contrastText: secondary["100"],
-            fixed: secondary["90"],
-            dim: secondary["80"],
-            container: secondary["90"],
-        },
-        onSecondary: {
-            main: secondary["100"],
-            contrastText: secondary["40"],
-            fixed: secondary["10"],
-            dim: secondary["30"],
-            container: secondary["10"],
-        },
-        tertiary: {
-            main: tertiary["40"],
-            contrastText: tertiary["100"],
-            fixed: tertiary["90"],
-            dim: tertiary["80"],
-            container: tertiary["90"],
-        },
-        onTertiary: {
-            main: tertiary["100"],
-            contrastText: tertiary["40"],
-            fixed: tertiary["10"],
-            dim: tertiary["30"],
-            container: tertiary["10"],
-        },
+        primary: getColorAssignment(colorValues.primary),
+        onPrimary: getColorAssignment(colorValues.primary),
+        secondary: getColorAssignment(colorValues.secondary),
+        onSecondary: getColorAssignment(colorValues.secondary),
+        tertiary: getColorAssignment(colorValues.tertiary),
+        onTertiary: getColorAssignment(colorValues.tertiary),
         neutral: {
-            main: neutral["95"],
-            dark: neutral["80"],
-            light: neutral["99"],
-            contrastText: neutral["0"]
+            main: colorValues.neutral["95"],
+            dark: colorValues.neutral["80"],
+            light: colorValues.neutral["99"],
+            contrastText: colorValues.neutral["0"]
         },
         error: {
-            main: "#BA1A1A",
+            main: "#f44336",
         },
         info: {
             main: "#2196f3",
@@ -151,7 +97,6 @@ const theme = createTheme({
             lineHeight: "16px",
         },
     }
-
 });
 
 declare module '@mui/material/styles' {
