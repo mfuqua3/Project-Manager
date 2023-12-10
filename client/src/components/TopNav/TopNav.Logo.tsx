@@ -10,11 +10,9 @@ function TopNavLogo() {
             <TopNavMenuItem title={""}
                             icon={<Box component={"img"}
                                        sx={{
-                                           height: "28px",
-                                           border: "1px solid rgba(255,255,255,0.6)",
-                                           borderRadius: "14px"
+                                           height: "45px"
                                        }}
-                                       src={"/logo192.png"}/>}
+                                       src={"/logo.png"} alt={"logo"}/>}
                             onClick={() => navigate("")}/>
         </>
     );

@@ -7,7 +7,7 @@ export interface ConsoleLoggerConfiguration {
 
 // Utility function to format the timestamp
 function formatTimestamp(date: Date): string {
-    return date.toISOString().substr(11, 8);
+    return date.toISOString().substring(11, 19);
 }
 
 // Utility function to format the log level
@@ -107,8 +107,7 @@ export default class ConsoleLogger implements LoggingAdapter {
                     if (idx >= message.length - 1) {
                         return [];
                     }
-                    const returned = idx % 2 === 0 ? [argumentStyle(message[idx + 1])] : [defaultStyle];
-                    return returned;
+                    return idx % 2 === 0 ? [argumentStyle(message[idx + 1])] : [defaultStyle];
                 })
             ]
         );
