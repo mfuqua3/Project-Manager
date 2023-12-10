@@ -19,8 +19,8 @@ public class XmlExceptionsOperationFilter : IOperationFilter
     private readonly XPathNavigator _xmlNavigator;
 
     public XmlExceptionsOperationFilter(
-        XPathDocument xmlDoc, 
-        ProblemDetailsFactory problemDetailsFactory, 
+        XPathDocument xmlDoc,
+        ProblemDetailsFactory problemDetailsFactory,
         IHttpContextFactory httpContextFactory,
         IServiceProvider serviceProvider)
     {
@@ -34,52 +34,59 @@ public class XmlExceptionsOperationFilter : IOperationFilter
     {
         if (context.MethodInfo == null) return;
 
-        // If method is from a constructed generic type, look for comments from the generic type method
-        var targetMethod = context.MethodInfo.DeclaringType.IsConstructedGenericType
+        var targetMethod = context.MethodInfo.DeclaringType!.IsConstructedGenericType
             ? context.MethodInfo.GetUnderlyingGenericTypeMethod()
             : context.MethodInfo;
-
         if (targetMethod == null) return;
 
-        var exceptions = GetExceptionTypes(operation, targetMethod);
+        var exceptions = GetExceptionTypes(targetMethod);
         foreach (var (exceptionType, description) in exceptions)
         {
-            if (exceptionType.GetConstructor(Array.Empty<Type>()) == null)
-            {
-                throw new InvalidOperationException(
-                    $"{exceptionType.Name} may not be used for auto-generated OpenApi docs, it must have a parameterless constructor");
-            }
-
-            var featureCollection = new FeatureCollection();
-            featureCollection.Set<IExceptionHandlerFeature>(new ExceptionHandlerFeature
-            {
-                Error = (Exception)Activator.CreateInstance(exceptionType)!
-            });;
-            var httpContext = _httpContextFactory.Create(featureCollection);
-            httpContext.RequestServices = _serviceProvider;
-            var problemDetail = _problemDetailsFactory.CreateProblemDetails(httpContext);
-            if (!problemDetail.Status.HasValue || problemDetail.Status.Value == 500 ||
-                operation.Responses.ContainsKey(problemDetail.Status.Value.ToString()))
-            {
-                continue;
-            }
-            operation.Responses.Add(problemDetail.Status.Value.ToString(), new OpenApiResponse
-            {
-                Description = description,
-                Content = new Dictionary<string, OpenApiMediaType>
-                {
-                    ["application/problem+json"] = new()
-                    {
-                        Example = new OpenApiString(JsonConvert.SerializeObject(problemDetail, Formatting.Indented)),
-                        Schema = context.SchemaGenerator.GenerateSchema(typeof(ProblemDetails),
-                            context.SchemaRepository)
-                    }
-                }
-            });
+            ProcessExceptionTypes(operation, exceptionType, description, context);
         }
     }
 
-    private IEnumerable<(Type, string)> GetExceptionTypes(OpenApiOperation operation, MethodInfo methodInfo)
+    private void ProcessExceptionTypes(OpenApiOperation operation, Type exceptionType, string description,
+        OperationFilterContext context)
+    {
+        if (exceptionType.GetConstructor(Array.Empty<Type>()) == null)
+        {
+            throw new InvalidOperationException(
+                $"{exceptionType.Name} may not be used for auto-generated OpenApi docs, it must have a parameterless constructor");
+        }
+
+        var featureCollection = new FeatureCollection();
+        featureCollection.Set<IExceptionHandlerFeature>(new ExceptionHandlerFeature
+        {
+            Error = (Exception)Activator.CreateInstance(exceptionType)!
+        });
+
+        var httpContext = _httpContextFactory.Create(featureCollection);
+        httpContext.RequestServices = _serviceProvider;
+
+        var problemDetail = _problemDetailsFactory.CreateProblemDetails(httpContext);
+        if (!problemDetail.Status.HasValue || problemDetail.Status.Value == 500 ||
+            operation.Responses.ContainsKey(problemDetail.Status.Value.ToString()))
+        {
+            return;
+        }
+
+        operation.Responses.Add(problemDetail.Status.Value.ToString(), new OpenApiResponse
+        {
+            Description = description,
+            Content = new Dictionary<string, OpenApiMediaType>
+            {
+                ["application/problem+json"] = new()
+                {
+                    Example = new OpenApiString(JsonConvert.SerializeObject(problemDetail, Formatting.Indented)),
+                    Schema = context.SchemaGenerator.GenerateSchema(typeof(ProblemDetails),
+                        context.SchemaRepository)
+                }
+            }
+        });
+    }
+
+    private IEnumerable<(Type, string)> GetExceptionTypes(MethodInfo methodInfo)
     {
         var methodMemberName = XmlCommentsNodeNameHelper.GetMemberNameForMethod(methodInfo);
         var methodNode = _xmlNavigator.SelectSingleNode($"/doc/members/member[@name='{methodMemberName}']");
@@ -96,12 +103,9 @@ public class XmlExceptionsOperationFilter : IOperationFilter
                 exceptionTypeString = exceptionTypeString[2..];
             }
 
-            var applicationType = applicationTypes.FirstOrDefault(x => x.FullName == exceptionTypeString);
-            if (applicationType == null)
-            {
-                applicationType = Type.GetType(exceptionTypeString, throwOnError: true);
-            }
-            
+            var applicationType = applicationTypes.FirstOrDefault(x => x.FullName == exceptionTypeString) ??
+                                  Type.GetType(exceptionTypeString, throwOnError: true);
+
             if (!applicationType.IsAssignableTo(typeof(Exception)))
             {
                 throw new InvalidOperationException(
