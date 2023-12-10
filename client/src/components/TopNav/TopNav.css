@@ -3,4 +3,26 @@
     height: 40px;
 }
 
+.icon-open {
+    animation: spin-open 0.7s ease-in-out forwards;
+}
+.icon-close {
+    animation: spin-close 0.7s ease-in-out backwards;
+}
 
+@keyframes spin-open {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(450deg);
+    }
+}
+@keyframes spin-close {
+    0% {
+        transform: rotate(450deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}

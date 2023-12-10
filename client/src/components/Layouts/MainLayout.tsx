@@ -1,23 +1,25 @@
 import React from "react";
 import {Stack} from "@mui/material";
 import MenuProvider from "../../utils/menu/MenuProvider";
-import ResponsiveContainer from "../ResponsiveContainer/ResponsiveContainer";
-import TopNavXS from "../TopNav/TopNav.XS";
 import TopNavMd from "../TopNav/TopNav.Md";
 import ScrollWrapper from "../UtilityWrappers/ScrollWrapper";
 import {Outlet} from "react-router-dom";
-
+import ProjectSelector from "../ProjectSelector/ProjectSelector";
+import {SideMenuProvider} from "../ProjectSelector";
 
 function MainLayout() {
     return (
-        <Stack height={"100vh"}>
-            <MenuProvider>
-                <ResponsiveContainer lower={<TopNavXS/>} upper={<TopNavMd/>}/>
-            </MenuProvider>
-            <ScrollWrapper>
-                <Outlet/>
-            </ScrollWrapper>
-        </Stack>
+        <SideMenuProvider>
+            <Stack height={"100vh"} position={"relative"}>
+                <MenuProvider>
+                    <TopNavMd/>
+                </MenuProvider>
+                <ProjectSelector/>
+                <ScrollWrapper>
+                    <Outlet/>
+                </ScrollWrapper>
+            </Stack>
+        </SideMenuProvider>
     );
 }
 

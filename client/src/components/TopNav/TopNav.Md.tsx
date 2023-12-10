@@ -20,14 +20,18 @@ function TopNavMd() {
                 <Toolbar>
                     <Box display={"flex"} flexDirection={"row"} alignItems={"center"} justifyContent={"space-between"}
                          width={"100%"}>
-                        <TopNavLogo/>
+                        <div />
                         <Box component={"img"} className={"nav-image"} sx={(theme) => ({
                             boxShadow: `0 0 5px ${theme.palette.primary.dim}, 0 0 10px ${theme.palette.primary.dim}, 0 0 15px ${theme.palette.primary.dim}`,
                             backgroundColor: `${theme.palette.primary.dim}`
                         })} height={"28px"}/>
-                        <TopNavMenuItem title={""} tooltip={isAuthenticated ? "Sign Out" : "Sign In"}
-                                        icon={isAuthenticated ? <LockOpenIcon/> : <LockPersonIcon/>}
-                                        onClick={() => navigate(ProjectManagerRoutes.login)}/>
+                        {
+                            !isAuthenticated ?
+                                <TopNavLogo /> :
+                                <TopNavMenuItem title={""} tooltip={isAuthenticated ? "Sign Out" : "Sign In"}
+                                                                               icon={isAuthenticated ? <LockOpenIcon/> : <LockPersonIcon/>}
+                                                                               onClick={() => navigate(ProjectManagerRoutes.login)}/>
+                        }
                     </Box>
                 </Toolbar>
             </AppBar>
