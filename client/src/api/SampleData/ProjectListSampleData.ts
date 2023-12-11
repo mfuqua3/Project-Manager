@@ -13,6 +13,4 @@ const constructSampleData = (): PagedList<ProjectListItemDto> => {
         pageSize: listItems.length,
         totalCount: listItems.length}
 };
-
-export default constructSampleData;
-constructSampleData();
+export default constructSampleData();
