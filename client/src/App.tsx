@@ -8,12 +8,13 @@ import SnackbarRoot from "./utils/snackbar/SnackbarRoot";
 import ModalRoot from "./utils/modal/ModalRoot";
 import ProjectListProvider from "./components/ProjectSelector/ProjectListProvider";
 import {useLogger} from "./utils/logging";
+import {isOfflineMode} from "./utils/helpers";
 function App() {
     const logger = useLogger(App);
     useEffect(() => {
         logger.debug("Offline mode is {setting}",
             {
-                setting: process.env["REACT_APP_IS_OFFLINE_ENABLED"] ?? "undefined"
+                setting: isOfflineMode ? "ON" : "OFF"
             });
     }, []);
     const clientId = process.env["REACT_APP_GOOGLE_CLIENT_ID"] ?? "";

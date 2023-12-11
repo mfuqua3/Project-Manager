@@ -10,6 +10,7 @@ import "./TopNav.css";
 import {TopNavMenuItem} from "./TopNav.MenuItem";
 import {ProjectManagerRoutes} from "../../App.Routes";
 import {useAuth} from "../../utils/auth";
+import {isOfflineMode} from "../../utils/helpers";
 
 function TopNavMd() {
     const navigate = useNavigate();
@@ -26,7 +27,7 @@ function TopNavMd() {
                             backgroundColor: `${theme.palette.primary.dim}`
                         })} height={"28px"}/>
                         {
-                            !isAuthenticated ?
+                            (isAuthenticated || isOfflineMode) ?
                                 <TopNavLogo /> :
                                 <TopNavMenuItem title={""} tooltip={isAuthenticated ? "Sign Out" : "Sign In"}
                                                                                icon={isAuthenticated ? <LockOpenIcon/> : <LockPersonIcon/>}

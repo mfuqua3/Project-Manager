@@ -1,6 +1,6 @@
 import {ProblemDetails} from "../../domain/models";
 import {RawHttpResult} from "../RawHttpResult";
-const offlineMode = process.env["REACT_APP_IS_OFFLINE_ENABLED"] === "on";
+import {isOfflineMode} from "../../utils/helpers";
 
 export function NoOfflineMode() {
     return function (
@@ -11,7 +11,7 @@ export function NoOfflineMode() {
         const originalMethod = descriptor.value;
 
         descriptor.value = function (...args: any[]) {
-            if (offlineMode) {
+            if (isOfflineMode) {
                 const problem: ProblemDetails = {
                     detail: `${_propertyKey} is not supported in offline mode.`,
                     status: 501,

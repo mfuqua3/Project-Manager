@@ -1,6 +1,6 @@
 import {RawHttpResult} from "../RawHttpResult";
+import {isOfflineMode} from "../../utils/helpers";
 
-const offlineMode = process.env["REACT_APP_IS_OFFLINE_ENABLED"] === "on";
 export function OfflineData<T>(sampleData: T) {
     return function (
         _target: unknown,
@@ -10,7 +10,7 @@ export function OfflineData<T>(sampleData: T) {
         const originalMethod = descriptor.value;
 
         descriptor.value = function (...args: any[]) {
-            if (offlineMode) {
+            if (isOfflineMode) {
                 const result: RawHttpResult<T> = {
                     isSuccessStatusCode: true,
                     data: sampleData,
