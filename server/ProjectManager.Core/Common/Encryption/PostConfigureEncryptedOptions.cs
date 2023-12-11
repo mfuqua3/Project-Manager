@@ -5,11 +5,19 @@ using Microsoft.Extensions.Options;
 
 namespace ProjectManager.Common.Encryption;
 
+/// <summary>
+/// This class is responsible for post-configuring encrypted options.
+/// It implements the <see cref="IPostConfigureOptions{TOptions}"/> interface.
+/// </summary>
+/// <typeparam name="TOptions">The type of options to post-configure.</typeparam>
 public class PostConfigureEncryptedOptions<TOptions> : IPostConfigureOptions<TOptions> where TOptions : class
 {
     private readonly TypedEncryptedOptionsSettings _settings;
+
     private readonly IEncryptionReader _encryptionReader;
+
     private readonly IOptions<EncryptionOptions> _encryptionOptions;
+
     private readonly ILogger<PostConfigureEncryptedOptions<TOptions>> _logger;
 
     public PostConfigureEncryptedOptions(TypedEncryptedOptionsSettings settings, IEncryptionReader encryptionReader,
@@ -21,6 +29,23 @@ public class PostConfigureEncryptedOptions<TOptions> : IPostConfigureOptions<TOp
         _logger = logger;
     }
 
+    /// <summary>
+    /// This method is responsible for post-configuration logic. It performs decryption of the encrypted property value
+    /// and sets the decrypted value to the specified options object.
+    /// </summary>
+    /// <typeparam name="TOptions">The type of options object.</typeparam>
+    /// <param name="name">The name of the specific configuration. Only perform post-configuration logic when the specified name matches the configured name.</param>
+    /// <param name="options">The options object to be post-configured.</param>
+    /// <exception cref="EncryptionException">
+    /// Thrown when there is an error decrypting the value or no value was provided for decryption.
+    /// </exception>
+    /// <remarks>
+    /// This method checks if the specified name matches the configured name for the instance.
+    /// If encryption is disabled, a warning log will be emitted.
+    /// It retrieves the value of the specified property from the options object and decrypts it using the configured encryption reader.
+    /// The decrypted value is then set back to the property of the options object.
+    /// Any exceptions during decryption or setting the decrypted value will result in an EncryptionException being thrown.
+    /// </remarks>
     public void PostConfigure(string name, TOptions options)
     {
         if (_settings.Name != null && !string.Equals(name, _settings.Name))

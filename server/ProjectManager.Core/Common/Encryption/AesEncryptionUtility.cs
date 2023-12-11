@@ -6,11 +6,27 @@ using System.Text;
 
 namespace ProjectManager.Common.Encryption;
 
+/// <summary>
+/// Provides methods for encrypting and decrypting text using AES encryption algorithm.
+/// </summary>
 public static class AesEncryptionUtility
 {
+    /// <summary>
+    /// This constant variable represents the number of iterations used in a process.
+    /// </summary>
     private const int Iterations = 10000; // you may increase this number to make it more secure
+
+    /// <summary>
+    /// The size of the salt used for cryptographic operations.
+    /// </summary>
     private const int SaltSize = 16;
 
+    /// <summary>
+    /// Encrypts the given text using the provided key.
+    /// </summary>
+    /// <param name="text">The text to be encrypted.</param>
+    /// <param name="key">The key used for encryption.</param>
+    /// <returns>The encrypted text as a Base64 encoded string.</returns>
     public static string Encrypt(string text, string key)
     {
         if (string.IsNullOrEmpty(text))
@@ -38,7 +54,13 @@ public static class AesEncryptionUtility
 
         return Convert.ToBase64String(salt.Concat(memoryStream.ToArray()).ToArray());
     }
-    
+
+    /// <summary>
+    /// Decrypts the given encrypted string using the specified key.
+    /// </summary>
+    /// <param name="encryptedString">The encrypted string to be decrypted.</param>
+    /// <param name="key">The key used for decryption.</param>
+    /// <returns>The decrypted string.</returns>
     public static string Decrypt(string encryptedString, string key)
     {
         if (string.IsNullOrEmpty(encryptedString))
@@ -67,6 +89,10 @@ public static class AesEncryptionUtility
         return Encoding.Unicode.GetString(memoryStream.ToArray());
     }
 
+    /// <summary>
+    /// Generates a random salt of the specified size.
+    /// </summary>
+    /// <returns>A byte array containing the generated salt.</returns>
     private static byte[] GenerateSalt()
     {
         var data = new byte[SaltSize];

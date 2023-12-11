@@ -12,6 +12,14 @@ namespace ProjectManager.Common.DependencyInjection;
 
 public static class ModuleServiceCollectionExtensions
 {
+    /// <summary>
+    /// Adds a module to the IServiceCollection.
+    /// </summary>
+    /// <typeparam name="TModule">The type of the module.</typeparam>
+    /// <typeparam name="TOptions">The type of the options.</typeparam>
+    /// <param name="services">The IServiceCollection to add the module to.</param>
+    /// <param name="configureOptions">An action to configure the options of the module.</param>
+    /// <returns>The updated IServiceCollection.</returns>
     public static IServiceCollection AddModule<TModule, TOptions>(this IServiceCollection services,
         Action<TOptions> configureOptions)
         where TModule : Module<TOptions> where TOptions : class, new()
@@ -37,6 +45,12 @@ public static class ModuleServiceCollectionExtensions
         return services;
     }
 
+    /// <summary>
+    /// Adds a module to the service collection.
+    /// </summary>
+    /// <typeparam name="T">The module type to be added.</typeparam>
+    /// <param name="services">The service collection.</param>
+    /// <returns>The modified service collection.</returns>
     public static IServiceCollection AddModule<T>(this IServiceCollection services)
         where T : Module
     {
