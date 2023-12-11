@@ -15,3 +15,4 @@ export interface ExceptionDetails {
     message: string;
     stackTrace: string;
 }
+

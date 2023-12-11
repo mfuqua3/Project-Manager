@@ -6,6 +6,7 @@ import AuthProvider from "./utils/auth/AuthProvider";
 import DrawerRoot from "./utils/drawer/DrawerRoot";
 import SnackbarRoot from "./utils/snackbar/SnackbarRoot";
 import ModalRoot from "./utils/modal/ModalRoot";
+import ProjectListProvider from "./components/ProjectSelector/ProjectListProvider";
 
 function App() {
 
@@ -15,10 +16,12 @@ function App() {
             <TokenProvider expiryThreshold={5 * 60 * 1000}>
                 <AuthProvider>
                     <>
-                        <AppRoutes/>
-                        <DrawerRoot />
-                        <SnackbarRoot />
-                        <ModalRoot />
+                        <ProjectListProvider>
+                            <AppRoutes/>
+                        </ProjectListProvider>
+                        <DrawerRoot/>
+                        <SnackbarRoot/>
+                        <ModalRoot/>
                     </>
                 </AuthProvider>
             </TokenProvider>

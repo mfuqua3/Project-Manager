@@ -1,37 +1,13 @@
 import {useApiArea} from "../utils/env";
 import {ProblemDetails, TokenModel} from "../domain/models";
-import axios, {AxiosResponse} from "axios";
-import {isProblemDetails} from "../utils/guards";
+import axios from "axios";
+import {Result} from "./Result";
 
 export type RawHttpResult<T = undefined> = { statusText: string, status: number } &
     ({ isSuccessStatusCode: true, data: T } | {
         isSuccessStatusCode: false,
         data: ProblemDetails
     });
-
-function Result<T>(response: AxiosResponse<T, unknown>): RawHttpResult<T> {
-    const isSuccessStatusCode = response.status >= 200 && response.status < 400;
-    if (isSuccessStatusCode) {
-        return {
-            isSuccessStatusCode: true,
-            data: response.data,
-            status: response.status,
-            statusText: response.statusText
-        };
-    }
-    let error: ProblemDetails;
-    if (isProblemDetails(response.data as unknown as object)) {
-        error = response.data as unknown as ProblemDetails;
-    } else {
-        throw new Error(`Unknown error during execution of HTTP Request`);
-    }
-    return {
-        isSuccessStatusCode: false,
-        data: error,
-        status: response.status,
-        statusText: response.statusText
-    };
-}
 
 export class AuthorizationsApi {
     static apiArea = useApiArea('authorizations');
@@ -54,3 +30,6 @@ export class AuthorizationsApi {
         return Result(response);
     }
 }
+
+
+
