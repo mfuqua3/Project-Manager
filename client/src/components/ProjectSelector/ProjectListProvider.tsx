@@ -1,6 +1,9 @@
 import React, {createContext, useCallback, useContext, useEffect, useState} from "react";
 import {Project} from "./Project";
 import {useLogger} from "../../utils/logging";
+import {useApi} from "../../utils/hooks";
+import {ProjectsApi} from "../../api/ProjectsApi";
+import {number} from "yup";
 
 export interface ProjectListContextState {
     projects: Project[];
@@ -12,6 +15,7 @@ export const ProjectListContext = createContext<ProjectListContextState | null>(
 
 // Create Provider
 function ProjectListProvider({children}: { children: React.ReactNode }) {
+    const api = useApi();
     const initialProjectNames = ["MIRT", "BrokerVault", "Vanderbilt IAT", "Congenius", "Delta Dental", "MedeAnalytics", "Tivity RCM"];
     const initialProjects = initialProjectNames.map(name => ({name, active: false}));
     const [projectList, setProjectList] = useState<Project[]>(initialProjects);
@@ -19,8 +23,18 @@ function ProjectListProvider({children}: { children: React.ReactNode }) {
 
     // Replace static project list with API call in future
     useEffect(() => {
-        logger.debug('Project List Provider mounted and initialized with {projectCount} projects.',
-            {projectCount: initialProjects.length.toString()});
+        api.invoke(ProjectsApi.getProjectList({page: 1, pageSize: Number.MAX_SAFE_INTEGER}))
+            .then(resp=>{
+                if(resp.isSuccessStatusCode){
+                    logger.debug('Project List Provider mounted and initialized with {projectCount} projects.',
+                        {projectCount: resp.data.itemCount.toString()});
+                    setProjectList(resp.data.items.map((proj)=>({
+                        name: proj.name,
+                        active: false
+                    })));
+                }
+            })
+
         // fetch project list from API
         // and update projectList state
     }, []);

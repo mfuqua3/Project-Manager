@@ -1,13 +1,8 @@
 import {useApiArea} from "../utils/env";
-import {ProblemDetails, TokenModel} from "../domain/models";
+import {TokenModel} from "../domain/models";
 import axios from "axios";
 import {Result} from "./Result";
-
-export type RawHttpResult<T = undefined> = { statusText: string, status: number } &
-    ({ isSuccessStatusCode: true, data: T } | {
-        isSuccessStatusCode: false,
-        data: ProblemDetails
-    });
+import {RawHttpResult} from "./RawHttpResult";
 
 export class AuthorizationsApi {
     static apiArea = useApiArea('authorizations');
@@ -30,6 +25,3 @@ export class AuthorizationsApi {
         return Result(response);
     }
 }
-
-
-

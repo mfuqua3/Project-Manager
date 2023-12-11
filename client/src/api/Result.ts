@@ -1,7 +1,8 @@
 import {AxiosResponse} from "axios";
 import {ProblemDetails} from "../domain/models";
 import {isProblemDetails} from "../utils/guards";
-import {RawHttpResult} from "./AuthorizationsApi";
+
+import {RawHttpResult} from "./RawHttpResult";
 
 export function Result<T>(response: AxiosResponse<T, unknown>): RawHttpResult<T> {
     const isSuccessStatusCode = response.status >= 200 && response.status < 400;
