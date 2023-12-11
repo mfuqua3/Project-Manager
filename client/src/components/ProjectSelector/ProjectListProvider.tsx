@@ -14,13 +14,13 @@ export const ProjectListContext = createContext<ProjectListContextState | null>(
 
 // Create Provider
 function ProjectListProvider({children}: { children: React.ReactNode }) {
-    const api = useApi();
+    const apiInvoker = useApi();
     const [projectList, setProjectList] = useState<Project[]>([]);
     const logger = useLogger(ProjectListProvider);
 
     // Replace static project list with API call in future
     useEffect(() => {
-        api.invoke(ProjectsApi.getProjectList({page: 1, pageSize: Number.MAX_SAFE_INTEGER}))
+        apiInvoker.invoke(ProjectsApi.getProjectList({page: 1, pageSize: Number.MAX_SAFE_INTEGER}))
             .then(resp=>{
                     logger.debug('Project List Provider mounted and initialized with {projectCount} projects.',
                         {projectCount: resp.itemCount.toString()});

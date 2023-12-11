@@ -8,9 +8,6 @@ import SnackbarRoot from "./utils/snackbar/SnackbarRoot";
 import ModalRoot from "./utils/modal/ModalRoot";
 import ProjectListProvider from "./components/ProjectSelector/ProjectListProvider";
 import {useLogger} from "./utils/logging";
-
-const offlineMode = process.env["OFFLINE_MODE"] === "on";
-
 function App() {
     const logger = useLogger(App);
     useEffect(() => {
