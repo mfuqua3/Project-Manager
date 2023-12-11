@@ -9,7 +9,9 @@ public class IdentityModule : Module
 {
     public override void ConfigureServices(IServiceCollection services)
     {
-        services.AddIdentity<AppUser, IdentityRole>()
+        services.AddIdentityCore<AppUser>()
+            .AddRoles<IdentityRole>()
+            .AddClaimsPrincipalFactory<AppUser>()
             .AddEntityFrameworkStores<ProjectManagerDbContext>()
             .AddDefaultTokenProviders();
     }

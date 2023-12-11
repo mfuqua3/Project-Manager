@@ -10,7 +10,6 @@ import "./TopNav.css";
 import {TopNavMenuItem} from "./TopNav.MenuItem";
 import {ProjectManagerRoutes} from "../../App.Routes";
 import {useAuth} from "../../utils/auth";
-import {isOfflineMode} from "../../utils/helpers";
 
 function TopNavMd() {
     const navigate = useNavigate();
@@ -21,13 +20,13 @@ function TopNavMd() {
                 <Toolbar>
                     <Box display={"flex"} flexDirection={"row"} alignItems={"center"} justifyContent={"space-between"}
                          width={"100%"}>
-                        <div />
+                        <TopNavMenuItem onClick={() => navigate(ProjectManagerRoutes.home)} title={"Project Manager"} />
                         <Box component={"img"} className={"nav-image"} sx={(theme) => ({
                             boxShadow: `0 0 5px ${theme.palette.primary.dim}, 0 0 10px ${theme.palette.primary.dim}, 0 0 15px ${theme.palette.primary.dim}`,
                             backgroundColor: `${theme.palette.primary.dim}`
                         })} height={"28px"}/>
                         {
-                            (isAuthenticated || isOfflineMode) ?
+                            (isAuthenticated) ?
                                 <TopNavLogo /> :
                                 <TopNavMenuItem title={""} tooltip={isAuthenticated ? "Sign Out" : "Sign In"}
                                                                                icon={isAuthenticated ? <LockOpenIcon/> : <LockPersonIcon/>}

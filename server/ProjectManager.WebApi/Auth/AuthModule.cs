@@ -11,7 +11,12 @@ public class AuthModule : Module<AuthorizationOptions>
     {
         var jwtOptions = options.Jwt;
         services
-            .AddAuthentication(ProjectManagerAuthenticationDefaults.DefaultScheme)
+            .AddAuthentication(auth =>
+            {
+                auth.DefaultAuthenticateScheme = ProjectManagerAuthenticationDefaults.DefaultScheme;
+                auth.DefaultScheme = ProjectManagerAuthenticationDefaults.DefaultScheme;
+                auth.DefaultChallengeScheme = ProjectManagerAuthenticationDefaults.DefaultScheme;
+            })
             .AddJwtBearer(ProjectManagerAuthenticationDefaults.DefaultScheme, opt =>
             {
                 opt.TokenValidationParameters.ValidIssuer = jwtOptions.Issuer;

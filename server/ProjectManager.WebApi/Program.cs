@@ -1,6 +1,7 @@
 using ProjectManager.Common.Configuration;
 using Serilog;
 using Serilog.Enrichers.Span;
+using Serilog.Sinks.SystemConsole.Themes;
 
 namespace ProjectManager.WebApi;
 
@@ -24,7 +25,9 @@ public class Program
         HostBuilderContext ctx,
         IServiceProvider serviceProvider,
         LoggerConfiguration lc)
-        => lc.ReadFrom.Configuration(ctx.Configuration)
+        => lc
+            .WriteTo.Console(theme: AnsiConsoleTheme.Code)
+            .ReadFrom.Configuration(ctx.Configuration)
             .ReadFrom.Services(serviceProvider)
             //.MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
             .Enrich.WithSpan()

@@ -26,7 +26,7 @@ const logLevel: LogLevel = isDevelopment() ? LogLevel.Debug : LogLevel.Informati
 const loggers: LoggerTypes[] = [
     new ConsoleLogger({logLevel})
 ]
-if(process.env["REACT_APP_USE_SEQ"]){
+if(process.env["REACT_APP_USE_SEQ"] == "true"){
     loggers.push(
         {
             logger: new SeqLogger({
