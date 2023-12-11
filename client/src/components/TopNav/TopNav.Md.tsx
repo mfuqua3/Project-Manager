@@ -16,7 +16,7 @@ function TopNavMd() {
     const {isAuthenticated} = useAuth();
     return (
         <Box sx={{flexGrow: 1}}>
-            <AppBar position="static">
+            <AppBar position={"static"}>
                 <Toolbar>
                     <Box display={"flex"} flexDirection={"row"} alignItems={"center"} justifyContent={"space-between"}
                          width={"100%"}>
