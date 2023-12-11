@@ -69,7 +69,7 @@ public class AuthorizationsController : ApiController
         var userId = User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
         if (!HttpContext.Request.Cookies.TryGetValue(RefreshCookieKey, out var refreshToken))
         {
-            throw new InvalidOperationException("No refresh token was present with the request");
+            throw new ProjectManagerBadRequestException("No refresh token was present with the request");
         }
 
         AuthenticateUserResult response;

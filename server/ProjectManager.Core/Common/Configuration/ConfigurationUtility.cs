@@ -2,8 +2,20 @@
 
 namespace ProjectManager.Common.Configuration;
 
+/// <summary>
+/// Utility class for configuration related operations.
+/// </summary>
 public static class ConfigurationUtility
 {
+    /// <summary>
+    /// Parses the section name for a given options type.
+    /// </summary>
+    /// <typeparam name="TOptions">The type of the options.</typeparam>
+    /// <returns>The parsed section name.</returns>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown if the options type does not conform to the naming convention of ending with 'Options' suffix,
+    /// or if the section name cannot be parsed.
+    /// </exception>
     public static string ParseSectionName<TOptions>()
     {
         const string suffix = "Options";

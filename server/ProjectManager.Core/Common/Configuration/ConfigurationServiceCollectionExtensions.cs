@@ -11,10 +11,7 @@ public static class ConfigurationServiceCollectionExtensions
     {
         var optionsBuilder = services.AddOptions<TOptions>()
             .BindConfiguration(configSectionName);
-        if (configureNestedOptions is not null)
-        {
-            configureNestedOptions(new NestedOptionsBuilder(configSectionName, services));
-        }
+        configureNestedOptions?.Invoke(new NestedOptionsBuilder(configSectionName, services));
 
         return optionsBuilder;
     }
