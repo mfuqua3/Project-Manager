@@ -1,6 +1,5 @@
 import {useSnackbar} from "../snackbar";
-import {isAxiosError} from "../guards/isAxiosError";
-import {isProblemDetails} from "../guards";
+import {isAxiosError, isProblemDetails} from "../guards";
 import {ProblemDetails} from "../../domain/models";
 import {ErrorTypes, useLogger} from "../logging";
 

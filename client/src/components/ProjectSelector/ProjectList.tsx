@@ -1,6 +1,6 @@
-import React, {useCallback, useContext, useLayoutEffect, useRef, useState} from "react";
+import React, {useLayoutEffect, useRef, useState} from "react";
 import {Fade, List, ListItemButton, Typography} from "@mui/material";
-import {ProjectListContext, useProjectList} from "./ProjectListProvider";
+import {useProjectList} from "./ProjectListProvider";
 
 // Create the Context
 
