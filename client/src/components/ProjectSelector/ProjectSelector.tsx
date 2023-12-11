@@ -1,50 +1,19 @@
-import React, {useEffect, useLayoutEffect, useRef, useState} from "react";
-import {Box, Button, Divider, Fade, List, ListItemButton, Typography} from "@mui/material";
+import React, {useEffect, useState} from "react";
+import {Box, Button, Divider} from "@mui/material";
 import {useSideMenu} from "./SideMenuProvider";
-
-interface Project {
-    name: string;
-    active: boolean;
-}
+import {ProjectList} from "./ProjectList";
 
 function ProjectSelector() {
-    const initialProjects = ["MIRT", "BrokerVault", "Vanderbilt IAT", "Congenius", "Delta Dental", "MedeAnalytics", "Tivity RCM"];
-    const projects = initialProjects.map(name => ({name, active: false}));
     const {isOpen} = useSideMenu();
-    const [translate, setTranslate] = useState(isOpen ? '0%' : '100%');
-    const [loaded, setLoaded] = useState<number[]>([]);
-    const [projectList, setProjectList] = useState<Project[]>(projects);
+    const [menuPosition, setMenuPosition] = useState(isOpen ? '0%' : '100%');
 
-    const calculateTranslation = () => {
-        setTranslate(isOpen ? '0%' : '100%');
+    const adjustMenuPosition = () => {
+        setMenuPosition(isOpen ? '0%' : '100%');
     };
 
     useEffect(() => {
-        calculateTranslation();
+        adjustMenuPosition();
     }, [isOpen]);
-
-    const timer = useRef<NodeJS.Timeout[]>([]);
-    useLayoutEffect(() => {
-        if (isOpen) {
-            projectList.forEach((_, index) => {
-                timer.current[index] = setTimeout(() => setLoaded(oldLoaded => [...oldLoaded, index]), index * 250);
-            });
-        } else {
-            setLoaded([]);
-            timer.current.forEach((time) => clearTimeout(time));
-            timer.current = [];
-        }
-        return () => {
-            timer.current.forEach((time) => clearTimeout(time));
-        };
-    }, [isOpen]);
-
-    const handleProjectClick = (index: number) => {
-        setProjectList(projectList.map((project, i) => ({
-            ...project,
-            active: i === index,
-        })));
-    };
 
     return (
         <>
@@ -58,7 +27,7 @@ function ProjectSelector() {
                 zIndex: 1,
                 boxShadow: "0px 10px 5px 5px rgba(0,0,0,0.2)",
                 transition: '0.7s',
-                transform: `translateX(${translate})`,
+                transform: `translateX(${menuPosition})`,
             }}>
                 <Box sx={{textAlign: 'center', p: 1}}>
                     <Button variant={"contained"} color={"primary"}>
@@ -66,23 +35,10 @@ function ProjectSelector() {
                     </Button>
                 </Box>
                 <Divider/>
-                <List>
-                    {projectList.map((project, index) => (
-                        <Fade in={loaded.includes(index)} timeout={800} key={project.name}>
-                            <ListItemButton onClick={() => handleProjectClick(index)} disableRipple>
-                                <Typography
-                                    sx={{
-                                        fontSize: '1.25rem',
-                                        color: theme => project.active ? '#000000' : theme.palette.secondary.contrastText
-                                    }}
-                                >{project.name}</Typography>
-                            </ListItemButton>
-                        </Fade>
-                    ))}
-                </List>
+                <ProjectList isVisible={isOpen} />
             </Box>
         </>
-    )
+    );
 }
 
 export default React.memo(ProjectSelector);
