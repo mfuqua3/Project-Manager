@@ -24,3 +24,4 @@ export function OfflineData<T>(sampleData: T) {
         };
     }
 }
+

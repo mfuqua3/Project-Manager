@@ -2,25 +2,20 @@ import {useSnackbar} from "../snackbar";
 import {isAxiosError, isProblemDetails} from "../guards";
 import {ProblemDetails} from "../../domain/models";
 import {ErrorTypes, useLogger} from "../logging";
+import {RawHttpResult} from "../../api/RawHttpResult";
+import {isRawHttpResult} from "../../api/IsRawHttpResult";
 
 export interface ProvidedErrorMessagingMethods {
-    invoke: <T>(p: Promise<T>, success?: string) => Promise<T>;
+    invoke: <T>(p: Promise<T | RawHttpResult<T>>, success?: string) => Promise<T>;
 }
 
 export const useApi = (): ProvidedErrorMessagingMethods => {
     const showMessage = useSnackbar();
     const logger = useLogger(useApi);
-    const invoke = async <T>(promise: Promise<T>, success?: string) => {
+    const invoke = async <T>(promise: Promise<T | RawHttpResult<T>>, success?: string) => {
+        let result: RawHttpResult<T> | Awaited<T>;
         try {
-            const result = await promise;
-            if (success !== null && success !== undefined) {
-                showMessage({
-                    position: "BottomCenter",
-                    type: "Success",
-                    message: `${success}`,
-                });
-            }
-            return result;
+            result = await promise;
         } catch (error) {
             let message: string;
             if (isAxiosError(error)) {
@@ -42,6 +37,23 @@ export const useApi = (): ProvidedErrorMessagingMethods => {
             });
             throw error;
         }
+        if(isRawHttpResult(result) && !result.isSuccessStatusCode){
+            logger.error(result.data as ProblemDetails);
+            showMessage({
+                position: "BottomCenter",
+                type: "Error",
+                message: result.data.detail ?? result.data.title,
+            });
+            throw result.data;
+        }
+        if (success !== null && success !== undefined) {
+            showMessage({
+                position: "BottomCenter",
+                type: "Success",
+                message: `${success}`,
+            });
+        }
+        return isRawHttpResult(result) ? result.data : result;
     };
 
     return {invoke};

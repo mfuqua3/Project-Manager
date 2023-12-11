@@ -24,15 +24,18 @@ const rootElement = document.getElementById("root");
 const root = createRoot(rootElement!);
 const logLevel: LogLevel = isDevelopment() ? LogLevel.Debug : LogLevel.Information;
 const loggers: LoggerTypes[] = [
-    new ConsoleLogger({logLevel}),
-    {
-        logger: new SeqLogger({
-            logLevel,
-            serverUrl: "http://localhost:5341"
-        }),
-        devOnly: true
-    }
+    new ConsoleLogger({logLevel})
 ]
+if(process.env["REACT_APP_USE_SEQ"]){
+    loggers.push(
+        {
+            logger: new SeqLogger({
+                logLevel,
+                serverUrl: "http://localhost:5341"
+            }),
+            devOnly: true
+        });
+}
 root.render(
     // <React.StrictMode>
     <LoggingProvider loggers={loggers}>

@@ -22,14 +22,12 @@ function ProjectListProvider({children}: { children: React.ReactNode }) {
     useEffect(() => {
         api.invoke(ProjectsApi.getProjectList({page: 1, pageSize: Number.MAX_SAFE_INTEGER}))
             .then(resp=>{
-                if(resp.isSuccessStatusCode){
                     logger.debug('Project List Provider mounted and initialized with {projectCount} projects.',
-                        {projectCount: resp.data.itemCount.toString()});
-                    setProjectList(resp.data.items.map((proj)=>({
+                        {projectCount: resp.itemCount.toString()});
+                    setProjectList(resp.items.map((proj)=>({
                         name: proj.name,
                         active: false
                     })));
-                }
             })
 
         // fetch project list from API

@@ -11,7 +11,7 @@ import {RawHttpResult} from "./RawHttpResult";
 export class ProjectsApi {
     static apiArea = useApiArea("projects");
 
-    @OfflineData(ProjectListSampleData)
+     @OfflineData(ProjectListSampleData)
     static async getProjectList(command: GetProjectListRequest): Promise<RawHttpResult<PagedList<ProjectListItemDto>>> {
         const url = this.apiArea.urlForEndpoint("");
         const response = await axios.get(url, {params: command, validateStatus: null});

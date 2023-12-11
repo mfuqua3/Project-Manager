@@ -76,16 +76,16 @@ const theme = createTheme({
             contrastText: colorValues.neutral["0"]
         },
         error: {
-            main: "#f44336",
+            main: "#B71C1C",
         },
         info: {
-            main: "#2196f3",
+            main: "#1976D2",
         },
         success: {
-            main: "#4caf50",
+            main: "#2E7D32",
         },
         warning: {
-            main: "#ff9800",
+            main: "#F57F17",
         }
     },
     typography: {
