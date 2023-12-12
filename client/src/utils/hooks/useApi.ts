@@ -17,6 +17,8 @@ export const useApi = (): ProvidedErrorMessagingMethods => {
         try {
             result = await promise;
         } catch (error) {
+            console.log("hello");
+            console.log(JSON.stringify(error));
             let message: string;
             if (isAxiosError(error)) {
                 if (error.response?.data && isProblemDetails(error.response.data)) {

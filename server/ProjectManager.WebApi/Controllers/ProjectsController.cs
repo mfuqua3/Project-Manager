@@ -30,7 +30,7 @@ public class ProjectsController : ApiController
     /// <response code="200">The paginated list of projects.</response>
     /// <exception cref="ProjectManagerBadRequestException">Throw for a malformed paginated request.</exception>
     [HttpGet]
-    public async Task<ActionResult<PagedList<ProjectListItemDto>>> GetProjectListAsync(GetProjectListCommand command) 
+    public async Task<ActionResult<PagedList<ProjectListItemDto>>> GetProjectListAsync([FromQuery]GetProjectListCommand command) 
         => Ok(await _projectsManager.GetProjectListAsync(command));
     /// <summary>
     /// Creates a new projects

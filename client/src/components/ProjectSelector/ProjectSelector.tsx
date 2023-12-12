@@ -2,9 +2,12 @@ import React, {useEffect, useState} from "react";
 import {Box, Button, Divider} from "@mui/material";
 import {useSideMenu} from "./SideMenuProvider";
 import {ProjectList} from "./ProjectList";
+import {useModal} from "../../utils/modal";
+import NewProject from "../NewProject/NewProject";
 
 function ProjectSelector() {
     const {isOpen} = useSideMenu();
+    const modal = useModal("medium");
     const [menuPosition, setMenuPosition] = useState(isOpen ? '0%' : '100%');
 
     const adjustMenuPosition = () => {
@@ -30,7 +33,8 @@ function ProjectSelector() {
                 transform: `translateX(${menuPosition})`,
             }}>
                 <Box sx={{textAlign: 'center', p: 1}}>
-                    <Button variant={"contained"} color={"primary"}>
+                    <Button variant={"contained"} color={"primary"}
+                    onClick={()=>modal.showModal(<NewProject />)}>
                         Launch New Project
                     </Button>
                 </Box>

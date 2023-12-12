@@ -3,6 +3,7 @@ import {Project} from "./Project";
 import {useLogger} from "../../utils/logging";
 import {useApi} from "../../utils/hooks";
 import {ProjectsApi} from "../../api/ProjectsApi";
+import {useAuth} from "../../utils/auth";
 
 export interface ProjectListContextState {
     projects: Project[];
@@ -15,12 +16,17 @@ export const ProjectListContext = createContext<ProjectListContextState | null>(
 // Create Provider
 function ProjectListProvider({children}: { children: React.ReactNode }) {
     const apiInvoker = useApi();
+    const {isAuthenticated} = useAuth();
     const [projectList, setProjectList] = useState<Project[]>([]);
     const logger = useLogger(ProjectListProvider);
 
     // Replace static project list with API call in future
     useEffect(() => {
-        apiInvoker.invoke(ProjectsApi.getProjectList({page: 1, pageSize: Number.MAX_SAFE_INTEGER}))
+        if(!isAuthenticated){
+            setProjectList([]);
+            return;
+        }
+        apiInvoker.invoke(ProjectsApi.getProjectList({page: 1, pageSize: 100}))
             .then(resp=>{
                     logger.debug('Project List Provider mounted and initialized with {projectCount} projects.',
                         {projectCount: resp.itemCount.toString()});
@@ -32,7 +38,7 @@ function ProjectListProvider({children}: { children: React.ReactNode }) {
 
         // fetch project list from API
         // and update projectList state
-    }, []);
+    }, [isAuthenticated]);
 
     async function selectProject(index: number): Promise<void> {
         //API stuff here later

@@ -1,4 +1,5 @@
 import React, {createContext, ReactNode, useContext, useState} from "react";
+import {useAuth} from "../../utils/auth";
 
 interface SideMenuContextType {
     isOpen: boolean;
@@ -16,13 +17,14 @@ export const useSideMenu = () => {
 };
 export const SideMenuProvider = ({children}: { children: ReactNode }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const {isAuthenticated} = useAuth();
 
     const toggleOpen = () => {
-        setIsOpen(!isOpen);
+        setIsOpen(!isOpen && isAuthenticated);
     };
 
     return (
-        <SideMenuContext.Provider value={{isOpen, toggleOpen}}>
+        <SideMenuContext.Provider value={{isOpen: isOpen && isAuthenticated, toggleOpen}}>
             {children}
         </SideMenuContext.Provider>
     );

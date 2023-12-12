@@ -11,7 +11,6 @@ public class IdentityModule : Module
     {
         services.AddIdentityCore<AppUser>()
             .AddRoles<IdentityRole>()
-            .AddClaimsPrincipalFactory<AppUser>()
             .AddEntityFrameworkStores<ProjectManagerDbContext>()
             .AddDefaultTokenProviders();
     }
